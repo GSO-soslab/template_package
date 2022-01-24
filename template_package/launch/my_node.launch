@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <node pkg="template_package" type="template_node_example1" name="template_package">
+        <rosparam command="load" file="$(find template_package)/config/template_config.yaml"/>
+    </node>
+</launch>

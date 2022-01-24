@@ -14,22 +14,20 @@ set(ROS_DEPENDS
   ${PROJECT_NAME}_msgs
   roscpp
   std_msgs
-  )
+)
 
 # if you end up using external dependencies it be a bit more manual (it's not that bad don't worry)
 set(EXTERNAL_DEPENDS
   #octomap
   #yaml-cpp
-  )
+)
 
 
 ##########################################
 ##  Be Carefull editing below this line ##
 ##########################################
 
-## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
-
+add_compile_options(-std=c++17)
 
 
 ###
@@ -71,22 +69,20 @@ file(GLOB HDRS
   "include/${PROJECT_NAME}/*.h"
 )
 file(GLOB SRCS
-  "src/*.cpp"
-  "src/*.hpp"
+  "src/${PROJECT_NAME}/*.cpp"
 )
 file(GLOB NODES
-  "nodes/*.cpp"
+  "src/*node*.cpp"
 )
 
 message("buliding ${PROJECT_NAME} node: ")
 foreach(NODE_FILE ${NODES})
   get_filename_component(NODE_NAME ${NODE_FILE} NAME_WE)
-  message("  - " ${NODE_NAME})
+  message(" - " ${NODE_NAME})
 
   add_executable(${NODE_NAME} ${NODE_FILE} ${HDRS} ${SRCS})
   add_dependencies(${NODE_NAME} ${PROJECT_NAME}_msgs_generate_messages_cpp)   # this makes sure required messages are addede before compilation
   target_link_libraries (${NODE_NAME} ${catkin_LIBRARIES})
-
 endforeach(NODE_FILE)
 
 
